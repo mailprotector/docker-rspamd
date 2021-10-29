@@ -1,2 +1,2 @@
-# rspamd-base
+# docker-rspamd
 rspamd docker base image
