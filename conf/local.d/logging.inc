@@ -1,1 +1,1 @@
-level = "info";
+level = "{= env.LOG_LEVEL|default("info", true) =}";
