@@ -8,7 +8,7 @@ env:
   dockerhub_name: mailprotector/rspamd
 
 jobs:
-  build-container:
+  build-push-container:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: Generate docker meta data for tagging
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.dockerhub_name }}
