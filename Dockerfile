@@ -3,7 +3,7 @@ LABEL maintainer="docker@mailprotector.com"
 LABEL name="rspamd"
 
 # install rspamd and pre-reqs
-RUN echo '@community http://mirror.clarkson.edu/alpine/latest-stable/community/' >> /etc/apk/repositories && \
+RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories && \
     apk update && \
     apk add --no-cache rspamd rspamd-controller rspamd-proxy ca-certificates tini
 
