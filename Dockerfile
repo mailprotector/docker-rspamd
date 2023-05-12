@@ -10,5 +10,5 @@ RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories && \
 RUN mkdir /run/rspamd
 COPY conf/ /etc/rspamd
 
-CMD ["tini", "/usr/sbin/rspamd", "-i", "-f"]
+CMD ["tini", "/usr/bin/rspamd", "-i", "-f"]
 EXPOSE 11334
