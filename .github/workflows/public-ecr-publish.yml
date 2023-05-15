@@ -1,5 +1,8 @@
 name: build-release-deploy
 on:
+  workflow_dispatch:
+    branches:
+      - main
   push:
     tags: ["v*"]
 
