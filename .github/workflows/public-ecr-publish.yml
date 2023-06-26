@@ -27,7 +27,7 @@ jobs:
 
       - name: Configure AWS credentials
         id: config-aws-region
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.PRODUCTION_IAM_ROLE_ARN }}
           aws-region: ${{ matrix.aws-region }}
@@ -36,13 +36,12 @@ jobs:
         id: prep
         run: |
           TAG=$(echo $GITHUB_SHA | head -c7)
-          echo ::set-output name=tagged_image::${TAG}
-          echo ::set-output name=latest_image::latest
-          echo ::set-output name=tag::${TAG}
+          echo "image_tag=${TAG}" >> $GITHUB_ENV
+          echo "latest_tag=latest" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@master
+        uses: docker/setup-buildx-action@v2
 
       - name: Login to Amazon Public ECR ${{ matrix.aws-region }}
         id: login-ecr
@@ -66,22 +65,22 @@ jobs:
           file: ./Dockerfile
           push: false
           load: true
-          tags: ${{ steps.prep.outputs.tagged_image }}
+          tags: ${{ env.image_tag }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Tag and Push image to AWS ECR ${{ matrix.aws-region }} as SHA
         env:
-          ECR_URL: ${{ env.ECR_PUBLIC_URL}}/${{ env.ECR_REPOSITORY }}:${{ steps.prep.outputs.tagged_image }}
+          ECR_URL: ${{ env.ECR_PUBLIC_URL}}/${{ env.ECR_REPOSITORY }}:${{ env.image_tag }}
         run: |
-          docker tag ${{ steps.prep.outputs.tagged_image }} ${{ env.ECR_URL }}
+          docker tag ${{ env.image_tag }} ${{ env.ECR_URL }}
           docker push ${{ env.ECR_URL }}
 
       - name: Tag and Push image to AWS ECR ${{ matrix.aws-region }} as latest
         env:
-          ECR_URL: ${{ env.ECR_PUBLIC_URL}}/${{ env.ECR_REPOSITORY }}:${{ steps.prep.outputs.latest_image }}
+          ECR_URL: ${{ env.ECR_PUBLIC_URL}}/${{ env.ECR_REPOSITORY }}:${{ env.latest_tag }}
         run: |
-          docker tag ${{ steps.prep.outputs.tagged_image }} ${{ env.ECR_URL }}
+          docker tag ${{ env.image_tag }} ${{ env.ECR_URL }}
           docker push ${{ env.ECR_URL }}
 
       - name: Move cache
