@@ -41,6 +41,8 @@ docker run -v $(pwd)/conf/override.d:/etc/rspamd/override.d mailprotector/rspamd
 | RSPAMD_REDIS_SERVERS              | a comma-separated list of redis servers names                                 | string  | redis         |
 | RSPAMD_REDIS_PASSWORD             | redis password                                                                | string  | n/a (unset)   |
 | RSPAMD_REDIS_DB                   | redis db                                                                      | integer | 0             |
+| RSPAMD_REDIS_BAYES_SERVERS        | a comma-separated list of redis servers names for use with bayes module       | string  | redis         |
+| RSPAMD_REDIS_BAYES_PASSWORD       | redis password for use with bayes module                                      | string  | secret        |
 | RSPAMD_SURBL_ENABLE               | enable SURBL checks                                                           | boolean | true          |
 | RSPAMD_WEBUI_SECURE_IP            | trusted ip range for WebUI access (auth not required)                         | string  | 127.0.0.1/32  |
 | RSPAMD_WEBUI_PASSWORD             | password for WebUI access                                                     | string  | n/a (unset)   |
