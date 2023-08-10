@@ -35,7 +35,7 @@ docker run -v $(pwd)/conf/override.d:/etc/rspamd/override.d mailprotector/rspamd
 | RSPAMD_MX_CHECK_TIMEOUT           | MX check timeout (seconds)                                                    | integer | 10            |
 | RSPAMD_NEURAL_ENABLE              | enable neural learning                                                        | boolean | false         |
 | RSPAMD_DNS_NAMESERVER             | DNS nameserver for rspamd to use for all DNS lookups                          | string  | localhost     |
-| RSPAMD_PENPHISH_ENABLE            | enable penphish scanning                                                      | boolean | true          |
+| RSPAMD_OPENPHISH_ENABLE           | enable openphish scanning                                                     | boolean | true          |
 | RSPAMD_PHISHTANK_ENABLE           | enable phishtank scanning                                                     | boolean | true          |
 | RSPAMD_RBL_ENABLE                 | enable RBL checks                                                             | boolean | false         |
 | RSPAMD_REDIS_SERVERS              | a comma-separated list of redis servers names                                 | string  | redis         |
